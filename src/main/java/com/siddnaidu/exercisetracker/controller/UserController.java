@@ -16,7 +16,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -39,9 +40,9 @@ public class UserController {
 
         EntityModel<User> resource = EntityModel.of(user.get());
 
-        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).getAllUsers());
+        WebMvcLinkBuilder apiLinks = linkTo(methodOn(this.getClass()).getAllUsers());
 
-        resource.add(linkTo.withRel("all-users"));
+        resource.add(apiLinks.withRel("all-users"));
 
         return resource;
     }
@@ -57,7 +58,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/api/users/{id}")
-    public ResponseEntity<Object> editUser(@Valid @RequestBody User newUser, @PathVariable Long id) {
+    public ResponseEntity<Object> editUser(@RequestBody User newUser, @PathVariable Long id) {
         User userToBeUpdated = userRepository.findById(id) //
                 .map(user -> {
                     user.setFirstName(newUser.getFirstName());

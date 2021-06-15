@@ -3,6 +3,8 @@ package com.siddnaidu.exercisetracker.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +17,9 @@ public class User {
     private float height;
     private float weight;
     private int age;
+
+    @OneToMany(mappedBy = "user")
+    private List<Exercise> exercises;
 
     public User() {}
 
@@ -36,6 +41,14 @@ public class User {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
     }
 
     public void setFirstName(String firstName) {
