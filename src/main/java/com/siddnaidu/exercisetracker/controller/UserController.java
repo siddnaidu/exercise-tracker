@@ -67,6 +67,7 @@ public class UserController {
                     user.setHeightFeet(newUser.getHeightFeet());
                     user.setHeightInches(newUser.getHeightInches());
                     user.setWeight(newUser.getWeight());
+                    user.setExercises(newUser.getExercises());
                     return userRepository.save(user);
                 }) //
                 .orElseGet(() -> {

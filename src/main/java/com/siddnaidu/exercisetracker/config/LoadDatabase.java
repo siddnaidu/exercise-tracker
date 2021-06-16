@@ -1,19 +1,9 @@
 package com.siddnaidu.exercisetracker.config;
 
-import com.siddnaidu.exercisetracker.model.Exercise;
-import com.siddnaidu.exercisetracker.model.Role;
-import com.siddnaidu.exercisetracker.model.User;
-import com.siddnaidu.exercisetracker.repository.ExerciseRepository;
-import com.siddnaidu.exercisetracker.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.Arrays;
 
 @Configuration
 class LoadDatabase {

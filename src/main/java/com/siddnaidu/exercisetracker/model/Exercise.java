@@ -17,7 +17,7 @@ public class Exercise {
     private String equipment;
     private float weight;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;
 

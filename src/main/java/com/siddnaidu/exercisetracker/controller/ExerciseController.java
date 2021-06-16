@@ -95,7 +95,7 @@ public class ExerciseController {
         return ResponseEntity.created(location).build();
     }
 
-    @PutMapping(path = "/api/users/{userId}/exercises")
+    @PutMapping(path = "/api/users/{userId}/exercises/{exerciseId}")
     public ResponseEntity<Exercise> editExercise(@RequestBody Exercise newExercise,
                                                  @PathVariable Long userId,
                                                  @PathVariable Long exerciseId) {
@@ -106,22 +106,11 @@ public class ExerciseController {
         }
 
         User user = userOptional.get();
+        System.out.println(user.getId());
 
-        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
-
-        if(!exerciseOptional.isPresent()) {
-            throw new ExerciseNotFoundException("exercise-id: " + exerciseId);
-        }
-
-        if(exerciseOptional.get().getUser() != user) {
-            throw new ExerciseNotFoundException("Excersize: " + exerciseId
-                    + "does not belong to User: " + userId);
-        }
-
-        Exercise exerciseToBeUpdated = exerciseOptional
+        Exercise exerciseToBeUpdated = exerciseRepository.findById(exerciseId)
                 .map(exercise -> {
             exercise.setExerciseType(newExercise.getExerciseType());
-            exercise.setUser(newExercise.getUser());
             exercise.setRepCount(newExercise.getRepCount());
             exercise.setSetCount(newExercise.getSetCount());
             exercise.setEquipment(newExercise.getEquipment());
@@ -133,14 +122,17 @@ public class ExerciseController {
             return exerciseRepository.save(newExercise);
         });
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{exerciseId}")
-                .buildAndExpand(exerciseToBeUpdated.getId()).toUri();
+        System.out.println(exerciseToBeUpdated.getId());
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{userId}")
+                .buildAndExpand(exerciseToBeUpdated.getId())
+                .toUri();
 
         return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping(path = "/api/users/{userId}/exercises/{exerciseId}")
-    public void deleteUser(@PathVariable Long userId, @PathVariable Long exerciseId) {
+    public void deleteExercise(@PathVariable Long userId, @PathVariable Long exerciseId) {
         Optional<User> userOptional = userRepository.findById(userId);
 
         if(!userOptional.isPresent()) {
