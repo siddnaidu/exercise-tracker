@@ -11,6 +11,7 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    // Height split into feet and inches
     private int heightFeet;
     private int heightInches;
     private float weight;

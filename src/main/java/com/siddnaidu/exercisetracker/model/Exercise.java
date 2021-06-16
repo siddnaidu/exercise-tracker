@@ -14,7 +14,9 @@ public class Exercise {
     private String exerciseType;
     private int setCount;
     private int repCount;
+    // Ex: dumbbells
     private String equipment;
+    // Weight of the equipment
     private float weight;
 
     @ManyToOne(fetch = FetchType.LAZY)
