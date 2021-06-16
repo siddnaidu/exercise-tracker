@@ -3,6 +3,7 @@ package com.siddnaidu.exercisetracker.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Exercise {
@@ -13,8 +14,10 @@ public class Exercise {
     private String exerciseType;
     private int setCount;
     private int repCount;
+    private String equipment;
+    private float weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private User user;
 
@@ -24,6 +27,14 @@ public class Exercise {
         this.exerciseType = exerciseType;
         this.setCount = setCount;
         this.repCount = repCount;
+    }
+
+    public Exercise(String exerciseType, int setCount, int repCount, String equipment, float weight) {
+        this.exerciseType = exerciseType;
+        this.setCount = setCount;
+        this.repCount = repCount;
+        this.equipment = equipment;
+        this.weight = weight;
     }
 
     public Exercise(String exerciseType) {
@@ -66,6 +77,22 @@ public class Exercise {
         return repCount;
     }
 
+    public String getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(String equipment) {
+        this.equipment = equipment;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
     public void setRepCount(int repCount) {
         this.repCount = repCount;
     }
@@ -77,6 +104,9 @@ public class Exercise {
                 ", exerciseType='" + exerciseType + '\'' +
                 ", setCount=" + setCount +
                 ", repCount=" + repCount +
+                ", equipment='" + equipment + '\'' +
+                ", weight=" + weight +
+                ", user=" + user +
                 '}';
     }
 }

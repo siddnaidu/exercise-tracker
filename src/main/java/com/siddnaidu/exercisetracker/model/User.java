@@ -14,11 +14,12 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private float height;
+    private int heightFeet;
+    private int heightInches;
     private float weight;
     private int age;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Exercise> exercises;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -33,12 +34,27 @@ public class User {
     public User() {}
 
     public User(String firstName, String lastName, String email, String password,
-                float height, float weight, int age, List<Exercise> exercises, List<Role> roles) {
+                int heightFeet, int heightInches, float weight, int age, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.height = height;
+        this.heightFeet = heightFeet;
+        this.heightInches = heightInches;
+        this.weight = weight;
+        this.age = age;
+        this.roles = roles;
+    }
+
+    public User(String firstName, String lastName, String email, String password,
+                int heightFeet, int heightInches, float weight, int age, List<Exercise> exercises,
+                List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.heightFeet = heightFeet;
+        this.heightInches = heightInches;
         this.weight = weight;
         this.age = age;
         this.exercises = exercises;
@@ -110,12 +126,20 @@ public class User {
         this.lastName = lastName;
     }
 
-    public float getHeight() {
-        return height;
+    public int getHeightFeet() {
+        return heightFeet;
     }
 
-    public void setHeight(float height) {
-        this.height = height;
+    public void setHeightFeet(int heightFeet) {
+        this.heightFeet = heightFeet;
+    }
+
+    public int getHeightInches() {
+        return heightInches;
+    }
+
+    public void setHeightInches(int heightInches) {
+        this.heightInches = heightInches;
     }
 
     public float getWeight() {
@@ -140,9 +164,14 @@ public class User {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", height=" + height +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", heightFeet=" + heightFeet +
+                ", heightInches=" + heightInches +
                 ", weight=" + weight +
                 ", age=" + age +
+                ", exercises=" + exercises +
+                ", roles=" + roles +
                 '}';
     }
 }

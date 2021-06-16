@@ -38,7 +38,8 @@
 
 <div class="container">
     <h1>List of Exercises</h1>
-    Welcome <span sec:authentication="principal.username"> User</span>
+    Welcome <span sec:authentication="principal.username"
+                  th:text="principal.firstName"> User</span>
 </div>
 </body>
 </html>

@@ -6,14 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="67f22220-3c9f-475b-8357-ea476c14d08e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/fileDb.mv.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exercise-tracker.iml" beforeDir="false" afterPath="$PROJECT_DIR$/exercise-tracker.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/config/LoadDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/config/LoadDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/controller/ExerciseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/controller/ExerciseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/model/Exercise.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/model/Exercise.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/config/LoadDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/config/LoadDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/siddnaidu/exercisetracker/repository/UserRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +42,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />

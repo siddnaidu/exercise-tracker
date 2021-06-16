@@ -64,7 +64,8 @@ public class UserController {
                     user.setFirstName(newUser.getFirstName());
                     user.setLastName(newUser.getLastName());
                     user.setAge(newUser.getAge());
-                    user.setHeight(newUser.getHeight());
+                    user.setHeightFeet(newUser.getHeightFeet());
+                    user.setHeightInches(newUser.getHeightInches());
                     user.setWeight(newUser.getWeight());
                     return userRepository.save(user);
                 }) //

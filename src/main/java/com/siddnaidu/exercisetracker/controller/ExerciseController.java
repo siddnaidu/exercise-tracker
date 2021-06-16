@@ -124,6 +124,8 @@ public class ExerciseController {
             exercise.setUser(newExercise.getUser());
             exercise.setRepCount(newExercise.getRepCount());
             exercise.setSetCount(newExercise.getSetCount());
+            exercise.setEquipment(newExercise.getEquipment());
+            exercise.setWeight(newExercise.getWeight());
             return exerciseRepository.save(exercise);
         }).orElseGet(() -> {
             newExercise.setId(exerciseId);
