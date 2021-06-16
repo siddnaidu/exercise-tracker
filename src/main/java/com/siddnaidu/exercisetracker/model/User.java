@@ -1,12 +1,10 @@
 package com.siddnaidu.exercisetracker.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
 
     @Id
@@ -14,6 +12,8 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
+    private String password;
     private float height;
     private float weight;
     private int age;
@@ -21,14 +21,37 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Exercise> exercises;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles;
+
     public User() {}
 
-    public User(String firstName, String lastName, float height, float weight, int age) {
+    public User(String firstName, String lastName, String email, String password,
+                float height, float weight, int age, List<Exercise> exercises, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.password = password;
         this.height = height;
         this.weight = weight;
         this.age = age;
+        this.exercises = exercises;
+        this.roles = roles;
+    }
+
+    public User(String firstName, String lastName, String email, String password,
+                List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -37,6 +60,30 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

@@ -5,7 +5,7 @@ This project is an exercise tracker created using Java and the Spring Boot Frame
 
 Rest Points:
 
-* /users
-* /users/{userId}
-* /users/{userId}/exercises
-* /users/{userId}/exercises/{exerciseId}
+* api/users
+* api/users/{userId}
+* api/users/{userId}/exercises
+* api/users/{userId}/exercises/{exerciseId}
