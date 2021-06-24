@@ -1,11 +1,7 @@
 package com.siddnaidu.exercisetracker.controller;
 
-import com.siddnaidu.exercisetracker.exception.ExerciseNotFoundException;
-import com.siddnaidu.exercisetracker.exception.UserNotFoundException;
 import com.siddnaidu.exercisetracker.model.Exercise;
-import com.siddnaidu.exercisetracker.model.User;
-import com.siddnaidu.exercisetracker.repository.ExerciseRepository;
-import com.siddnaidu.exercisetracker.repository.UserRepository;
+import com.siddnaidu.exercisetracker.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -16,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -25,50 +20,22 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ExerciseController {
 
     @Autowired
-    private ExerciseRepository exerciseRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    private ExerciseService exerciseService;
 
     @GetMapping(path = "/api/users/{userId}/exercises")
     public List<Exercise> getAllExercises(@PathVariable Long userId){
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if(!userOptional.isPresent()) {
-            throw new UserNotFoundException("user-id:" + userId);
-        }
-
-        return userOptional.get().getExercises();
+        return exerciseService.getAllExercisesForUser(userId);
     }
 
     @GetMapping(path = "/api/users/{userId}/exercises/{exerciseId}")
     public EntityModel<Exercise> getExercise(@PathVariable Long userId, @PathVariable Long exerciseId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if(!userOptional.isPresent()) {
-            throw new UserNotFoundException("user-id:" + userId);
-        }
-
-        User user = userOptional.get();
-
-        Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
-
-        if(!exerciseOptional.isPresent()) {
-            throw new ExerciseNotFoundException("exercise-id: " + exerciseId);
-        }
-
-        Exercise exercise = exerciseOptional.get();
-
-        if(exercise.getUser() != user) {
-            throw new ExerciseNotFoundException("Excersize: " + exerciseId
-                    + "does not belong to User: " + userId);
-        }
+        Exercise exercise = exerciseService.getExerciseByIdForUser(userId, exerciseId);
 
         EntityModel<Exercise> resource = EntityModel.of(exercise);
 
         WebMvcLinkBuilder apiLinks = linkTo(methodOn(this.getClass()).getAllExercises(userId));
 
-        resource.add(apiLinks.withRel("all-exercises for user: " + userId));
+        resource.add(apiLinks.withRel("all-exercises for user-" + userId));
 
         return resource;
     }
@@ -76,20 +43,10 @@ public class ExerciseController {
     @PostMapping(path = "/api/users/{userId}/exercises")
     public ResponseEntity<Object> createExercise(@Valid @PathVariable Long userId,
                                                  @RequestBody Exercise exercise) {
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if(!userOptional.isPresent()) {
-            throw new UserNotFoundException("user-id:" + userId);
-        }
-
-        User user = userOptional.get();
-
-        exercise.setUser(user);
-
-        exerciseRepository.save(exercise);
+        Exercise savedExercise = exerciseService.createExerciseForUser(userId, exercise);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{userId}")
-                .buildAndExpand(exercise.getId())
+                .buildAndExpand(savedExercise.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
@@ -99,30 +56,8 @@ public class ExerciseController {
     public ResponseEntity<Exercise> editExercise(@RequestBody Exercise newExercise,
                                                  @PathVariable Long userId,
                                                  @PathVariable Long exerciseId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if(!userOptional.isPresent()) {
-            throw new UserNotFoundException("user-id:" + userId);
-        }
-
-        User user = userOptional.get();
-        System.out.println(user.getId());
-
-        Exercise exerciseToBeUpdated = exerciseRepository.findById(exerciseId)
-                .map(exercise -> {
-            exercise.setExerciseType(newExercise.getExerciseType());
-            exercise.setRepCount(newExercise.getRepCount());
-            exercise.setSetCount(newExercise.getSetCount());
-            exercise.setEquipment(newExercise.getEquipment());
-            exercise.setWeight(newExercise.getWeight());
-            return exerciseRepository.save(exercise);
-        }).orElseGet(() -> {
-            newExercise.setId(exerciseId);
-            newExercise.setUser(user);
-            return exerciseRepository.save(newExercise);
-        });
-
-        System.out.println(exerciseToBeUpdated.getId());
+        Exercise exerciseToBeUpdated = exerciseService.
+                editExerciseForUser(userId, exerciseId, newExercise);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{userId}")
                 .buildAndExpand(exerciseToBeUpdated.getId())
@@ -133,12 +68,6 @@ public class ExerciseController {
 
     @DeleteMapping(path = "/api/users/{userId}/exercises/{exerciseId}")
     public void deleteExercise(@PathVariable Long userId, @PathVariable Long exerciseId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if(!userOptional.isPresent()) {
-            throw new UserNotFoundException("user-id:" + userId);
-        }
-
-        exerciseRepository.deleteById(exerciseId);
+        exerciseService.deleteExerciseForUser(userId, exerciseId);
     }
 }

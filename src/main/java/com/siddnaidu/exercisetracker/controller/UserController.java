@@ -1,8 +1,7 @@
 package com.siddnaidu.exercisetracker.controller;
 
-import com.siddnaidu.exercisetracker.exception.UserNotFoundException;
 import com.siddnaidu.exercisetracker.model.User;
-import com.siddnaidu.exercisetracker.repository.UserRepository;
+import com.siddnaidu.exercisetracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -14,7 +13,6 @@ import javax.validation.Valid;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -23,22 +21,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping(path = "/api/users")
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.getAllUsers();
     }
 
     @GetMapping(path = "/api/users/{id}")
     public EntityModel<User> getUser(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
 
-        if (!user.isPresent()) {
-            throw new UserNotFoundException("id-" + id);
-        }
+        User user = userService.getUserById(id);
 
-        EntityModel<User> resource = EntityModel.of(user.get());
+        EntityModel<User> resource = EntityModel.of(user);
 
         WebMvcLinkBuilder apiLinks = linkTo(methodOn(this.getClass()).getAllUsers());
 
@@ -49,7 +44,7 @@ public class UserController {
 
     @PostMapping(path = "/api/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user){
-        User savedUser = userRepository.save(user);
+        User savedUser = userService.createUser(user);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedUser.getId()).toUri();
@@ -59,21 +54,7 @@ public class UserController {
 
     @PutMapping(path = "/api/users/{id}")
     public ResponseEntity<Object> editUser(@RequestBody User newUser, @PathVariable Long id) {
-        User userToBeUpdated = userRepository.findById(id) //
-                .map(user -> {
-                    user.setFirstName(newUser.getFirstName());
-                    user.setLastName(newUser.getLastName());
-                    user.setAge(newUser.getAge());
-                    user.setHeightFeet(newUser.getHeightFeet());
-                    user.setHeightInches(newUser.getHeightInches());
-                    user.setWeight(newUser.getWeight());
-                    user.setExercises(newUser.getExercises());
-                    return userRepository.save(user);
-                }) //
-                .orElseGet(() -> {
-                    newUser.setId(id);
-                    return userRepository.save(newUser);
-                });
+        User userToBeUpdated = userService.editUser(newUser, id);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(userToBeUpdated.getId()).toUri();
@@ -83,6 +64,6 @@ public class UserController {
 
     @DeleteMapping(path = "/api/users/{id}")
     public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
     }
 }
