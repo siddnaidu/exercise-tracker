@@ -15,17 +15,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public User getUserById(Long id) {
+
         Optional<User> user = userRepository.findById(id);
 
         if (!user.isPresent()) {
-            throw new UserNotFoundException("id-" + id);
+            throw new UserNotFoundException("User with id " + id + " does not exist");
         }
-
         return user.get();
     }
 
@@ -53,6 +57,11 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
+        if(!userRepository.existsById(id)) {
+            throw new UserNotFoundException(
+                    "User with id " + id + " does not exist"
+            );
+        }
         userRepository.deleteById(id);
     }
 }

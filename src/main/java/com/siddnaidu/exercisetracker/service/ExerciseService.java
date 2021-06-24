@@ -20,6 +20,11 @@ public class ExerciseService {
     @Autowired
     private UserService userService;
 
+    public ExerciseService(ExerciseRepository exerciseRepository, UserService userService) {
+        this.exerciseRepository = exerciseRepository;
+        this.userService = userService;
+    }
+
     public List<Exercise> getAllExercisesForUser(Long userId) {
         User user = userService.getUserById(userId);
         return user.getExercises();
