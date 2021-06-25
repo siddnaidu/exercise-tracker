@@ -92,6 +92,7 @@ class UserServiceTest {
 
         when(userRepository.save(newUser)).thenReturn(newUser);
 
+        // argument capture gets both saves from userRepository
         userServiceTest.editUser(newUser, 10L);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userArgumentCaptor.capture());

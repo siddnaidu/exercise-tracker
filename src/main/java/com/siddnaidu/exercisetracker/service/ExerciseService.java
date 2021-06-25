@@ -1,6 +1,7 @@
 package com.siddnaidu.exercisetracker.service;
 
 import com.siddnaidu.exercisetracker.exception.ExerciseNotFoundException;
+import com.siddnaidu.exercisetracker.exception.UserNotFoundException;
 import com.siddnaidu.exercisetracker.model.Exercise;
 import com.siddnaidu.exercisetracker.model.User;
 import com.siddnaidu.exercisetracker.repository.ExerciseRepository;
@@ -36,14 +37,14 @@ public class ExerciseService {
         Optional<Exercise> exerciseOptional = exerciseRepository.findById(exerciseId);
 
         if(!exerciseOptional.isPresent()) {
-            throw new ExerciseNotFoundException("exercise-id: " + exerciseId);
+            throw new ExerciseNotFoundException("Exercise with id " + 100L + " does not exist");
         }
 
         Exercise exercise = exerciseOptional.get();
 
         if(exercise.getUser() != user) {
-            throw new ExerciseNotFoundException("Excersize: " + exerciseId
-                    + "does not belong to User: " + userId);
+            throw new ExerciseNotFoundException("Exercise: " + exerciseId
+                    + " does not belong to User: " + userId);
         }
         return exercise;
     }
@@ -79,6 +80,11 @@ public class ExerciseService {
     public void deleteExerciseForUser(Long userId, Long exerciseId) {
         // Check User exists
         User user = userService.getUserById(userId);
+        if(!exerciseRepository.existsById(exerciseId)) {
+            throw new UserNotFoundException(
+                    "Exercise with id " + exerciseId + " does not exist"
+            );
+        }
         exerciseRepository.deleteById(exerciseId);
     }
 }
