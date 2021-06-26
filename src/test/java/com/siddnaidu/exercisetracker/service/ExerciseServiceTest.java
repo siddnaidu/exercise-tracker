@@ -54,33 +54,35 @@ class ExerciseServiceTest {
         assertThat(savedExercises).isEqualTo(exerciseList);
     }
 
-    @Test
-    @Disabled
-    void testGetAllExercisesForUserNotFound() {
-        Long userId = 10L;
-        when(userServiceTest.getUserById(userId)).thenReturn(null);
-
-        List<Exercise> savedExercises = exerciseServiceTest.getAllExercisesForUser(userId);
-//        Optional<User> user = userRepository.findById(id);
-        assertThatThrownBy(() -> exerciseServiceTest.getAllExercisesForUser(userId))
-                .isInstanceOf(UserNotFoundException.class)
-                .hasMessageContaining("User with id " + userId + " does not exist");
-
-//        assertThat(user.isPresent()).isEqualTo(false);
-
-    }
+//    @Test
+//    @Disabled
+//    void testGetAllExercisesForUserNotFound() {
+//        Long userId = 10L;
+//        when(userServiceTest.getUserById(userId)).thenReturn(null);
+//
+//        List<Exercise> savedExercises = exerciseServiceTest.getAllExercisesForUser(userId);
+////        Optional<User> user = userRepository.findById(id);
+//        assertThatThrownBy(() -> exerciseServiceTest.getAllExercisesForUser(userId))
+//                .isInstanceOf(UserNotFoundException.class)
+//                .hasMessageContaining("User with id " + userId + " does not exist");
+//
+////        assertThat(user.isPresent()).isEqualTo(false);
+//
+//    }
 
     @Test
     void testGetExerciseByIdForUser() {
+        Long userId = 10L;
+        Long exerciseId = 100L;
         User user = new User("Sidd", "Naidu");
-        user.setId(10L);
+        user.setId(userId);
         Exercise exercise = new Exercise("jogging");
-        exercise.setId(100L);
+        exercise.setId(exerciseId);
         exercise.setUser(user);
-        when(userServiceTest.getUserById(10L)).thenReturn(user);
-        when(exerciseRepository.findById(100L)).thenReturn(Optional.of(exercise));
+        when(userServiceTest.getUserById(userId)).thenReturn(user);
+        when(exerciseRepository.findById(exerciseId)).thenReturn(Optional.of(exercise));
 
-        Exercise savedExercise = exerciseServiceTest.getExerciseByIdForUser(10L, 100L);
+        Exercise savedExercise = exerciseServiceTest.getExerciseByIdForUser(userId, exerciseId);
 
         assertThat(savedExercise).isEqualTo(exercise);
     }
@@ -101,13 +103,15 @@ class ExerciseServiceTest {
 
     @Test
     void testCreateExerciseForUser() {
+        Long userId = 10L;
+        Long exerciseId = 100L;
         User user = new User("Sidd", "Naidu");
-        user.setId(10L);
+        user.setId(userId);
         Exercise exercise = new Exercise("jogging");
-        exercise.setId(100L);
+        exercise.setId(exerciseId);
         exercise.setUser(user);
 
-        exerciseServiceTest.createExerciseForUser(10L, exercise);
+        exerciseServiceTest.createExerciseForUser(userId, exercise);
         ArgumentCaptor<Exercise> exerciseArgumentCaptor = ArgumentCaptor.forClass(Exercise.class);
         verify(exerciseRepository).save(exerciseArgumentCaptor.capture());
 
@@ -118,44 +122,61 @@ class ExerciseServiceTest {
 
     @Test
     void testEditExerciseForUser() {
+        Long userId = 10L;
+        Long exerciseId = 100L;
         User user = new User("Sidd", "Naidu", 5,
                 9, 140, 26);
-        user.setId(10L);
+        user.setId(userId);
         Exercise oldExercise = new Exercise("chest press", 3, 10,
                 "barbells", 50);
-        oldExercise.setId(100L);
+        oldExercise.setId(exerciseId);
         oldExercise.setUser(user);
+        String oldExerciseType = oldExercise.getExerciseType();
         Exercise newExercise = new Exercise("chest press", 3, 10,
                 "dumbbells", 50);
-        newExercise.setId(100L);
+        newExercise.setId(exerciseId);
         newExercise.setUser(user);
+        Exercise mockExercise = mock(Exercise.class);
 
-        when(exerciseRepository.save(newExercise)).thenReturn(newExercise);
+        when(exerciseRepository.findById(exerciseId)).thenReturn(Optional.of(oldExercise));
+        when(exerciseRepository.save(any(Exercise.class))).thenReturn(newExercise);
+        when(mockExercise.getExerciseType()).thenReturn(newExercise.getExerciseType());
+        when(mockExercise.getRepCount()).thenReturn(newExercise.getRepCount());
+        when(mockExercise.getSetCount()).thenReturn(newExercise.getSetCount());
+        when(mockExercise.getEquipment()).thenReturn(newExercise.getEquipment());
+        when(mockExercise.getWeight()).thenReturn(newExercise.getWeight());
 
-        // argument capture gets both saves from exerciseRepository
-        exerciseServiceTest.editExerciseForUser(10L, 100L, newExercise);
+        exerciseServiceTest.editExerciseForUser(userId, exerciseId, mockExercise);
+        verify(mockExercise).getExerciseType();
+        verify(mockExercise).getEquipment();
+        verify(mockExercise).getWeight();
+        verify(mockExercise).getRepCount();
+        verify(mockExercise).getSetCount();
         ArgumentCaptor<Exercise> exerciseArgumentCaptor = ArgumentCaptor.forClass(Exercise.class);
         verify(exerciseRepository).save(exerciseArgumentCaptor.capture());
 
         Exercise updatedExercise = exerciseArgumentCaptor.getValue();
 
+        assertThat(updatedExercise.getId()).isEqualTo(newExercise.getId());
         assertThat(updatedExercise.getId()).isEqualTo(oldExercise.getId());
-        assertThat(updatedExercise.getEquipment()).isNotEqualTo(oldExercise.getEquipment());
+        assertThat(updatedExercise.getEquipment()).isNotEqualTo(oldExerciseType);
     }
 
     @Test
     void testEditExerciseCreateNewExerciseForUser() {
+        Long userId = 10L;
+        Long exerciseId = 100L;
         User user = new User("Sidd", "Naidu", 5,
                 9, 140, 26);
-        user.setId(10L);
+        user.setId(userId);
         Exercise newExercise = new Exercise("chest press", 3, 10,
                 "dumbbells", 50);
-        newExercise.setId(100L);
+        newExercise.setId(exerciseId);
         newExercise.setUser(user);
 
 //        when(userRepository.getById(10L)).thenReturn(null);
 
-        exerciseServiceTest.editExerciseForUser(10L, 100L, newExercise);
+        exerciseServiceTest.editExerciseForUser(userId, exerciseId, newExercise);
         ArgumentCaptor<Exercise> exerciseArgumentCaptor = ArgumentCaptor.forClass(Exercise.class);
         verify(exerciseRepository).save(exerciseArgumentCaptor.capture());
 
@@ -166,7 +187,7 @@ class ExerciseServiceTest {
 
     @Test
     void testDeleteExerciseForUser() {
-        Long userId = Long.valueOf(10);
+        Long userId = 10L;
         Long exerciseId = 100L;
 
         given(exerciseRepository.existsById(exerciseId)).willReturn(true);
@@ -178,7 +199,7 @@ class ExerciseServiceTest {
 
     @Test
     void testDeleteExerciseNotFoundForUser() {
-        Long userId = Long.valueOf(10);
+        Long userId = 10L;
         Long exerciseId = 100L;
 
         given(exerciseRepository.existsById(exerciseId)).willReturn(false);

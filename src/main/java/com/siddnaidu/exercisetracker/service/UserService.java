@@ -38,7 +38,6 @@ public class UserService {
     }
 
     public User editUser(User newUser, Long id) {
-        System.out.println(userRepository.findById(id));
         User userToBeUpdated = userRepository.findById(id) //
                 .map(user -> {
                     user.setFirstName(newUser.getFirstName());

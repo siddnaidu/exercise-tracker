@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="67f22220-3c9f-475b-8357-ea476c14d08e" name="Default Changelist" comment="Added Tests for User Service">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/controller/ExerciseControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/controller/ExerciseControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/service/ExerciseServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/service/ExerciseServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/siddnaidu/exercisetracker/service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +61,7 @@
       <recent name="com.siddnaidu.exercisetracker.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ExerciseControllerTest">
+  <component name="RunManager" selected="JUnit.ExerciseServiceTest">
     <configuration name="ExerciseControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="exercise-tracker" />
       <extension name="coverage">
@@ -75,65 +77,63 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExerciseControllerTest.testCreateExerciseForUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ExerciseServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="exercise-tracker" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.siddnaidu.exercisetracker.controller.*" />
+          <option name="PATTERN" value="com.siddnaidu.exercisetracker.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.controller.ExerciseControllerTest" />
-      <option name="METHOD_NAME" value="testCreateExerciseForUser" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.service" />
+      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.service.ExerciseServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExerciseControllerTest.testDeleteExerciseForUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ExerciseServiceTest.testEditExerciseForUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="exercise-tracker" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.siddnaidu.exercisetracker.controller.*" />
+          <option name="PATTERN" value="com.siddnaidu.exercisetracker.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.controller.ExerciseControllerTest" />
-      <option name="METHOD_NAME" value="testDeleteExerciseForUser" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ExerciseControllerTest.testEditExerciseForUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="exercise-tracker" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.siddnaidu.exercisetracker.controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.controller.ExerciseControllerTest" />
+      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.service" />
+      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.service.ExerciseServiceTest" />
       <option name="METHOD_NAME" value="testEditExerciseForUser" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ExerciseControllerTest.testGetAllExerciseByIdForUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="exercise-tracker" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.siddnaidu.exercisetracker.controller.*" />
+          <option name="PATTERN" value="com.siddnaidu.exercisetracker.service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.controller" />
-      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.controller.ExerciseControllerTest" />
-      <option name="METHOD_NAME" value="testGetAllExerciseByIdForUser" />
+      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.service" />
+      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.service.UserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testEditUser" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="exercise-tracker" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.siddnaidu.exercisetracker.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.siddnaidu.exercisetracker.service" />
+      <option name="MAIN_CLASS_NAME" value="com.siddnaidu.exercisetracker.service.UserServiceTest" />
+      <option name="METHOD_NAME" value="testEditUser" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -141,11 +141,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ExerciseServiceTest" />
+        <item itemvalue="JUnit.ExerciseServiceTest.testEditExerciseForUser" />
+        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.UserServiceTest.testEditUser" />
         <item itemvalue="JUnit.ExerciseControllerTest" />
-        <item itemvalue="JUnit.ExerciseControllerTest.testEditExerciseForUser" />
-        <item itemvalue="JUnit.ExerciseControllerTest.testCreateExerciseForUser" />
-        <item itemvalue="JUnit.ExerciseControllerTest.testDeleteExerciseForUser" />
-        <item itemvalue="JUnit.ExerciseControllerTest.testGetAllExerciseByIdForUser" />
       </list>
     </recent_temporary>
   </component>
@@ -196,17 +196,6 @@
     <MESSAGE value="Added Tests for User Service" />
     <option name="LAST_COMMIT_MESSAGE" value="Added Tests for User Service" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/siddnaidu/exercisetracker/controller/ExerciseController.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/exercise_tracker$UserControllerTest_testEditUser.ic" NAME="UserControllerTest.testEditUser Coverage Results" MODIFIED="1624732810246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.siddnaidu.exercisetracker.controller.*</FILTER>
@@ -226,8 +215,11 @@
     <SUITE FILE_PATH="coverage/exercise_tracker$ExerciseServiceTest.ic" NAME="ExerciseServiceTest Coverage Results" MODIFIED="1624633466479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.siddnaidu.exercisetracker.service.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/exercise_tracker$UserServiceTest.ic" NAME="UserServiceTest Coverage Results" MODIFIED="1624639066625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/exercise_tracker$UserServiceTest.ic" NAME="UserServiceTest Coverage Results" MODIFIED="1624739606880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.siddnaidu.exercisetracker.service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/exercise_tracker$ExerciseControllerTest.ic" NAME="ExerciseControllerTest Coverage Results" MODIFIED="1624735383785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.siddnaidu.exercisetracker.controller.*</FILTER>
     </SUITE>
   </component>
 </project>

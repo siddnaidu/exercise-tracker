@@ -1,6 +1,7 @@
 package com.siddnaidu.exercisetracker.service;
 
 import com.siddnaidu.exercisetracker.exception.UserNotFoundException;
+import com.siddnaidu.exercisetracker.model.Exercise;
 import com.siddnaidu.exercisetracker.model.User;
 import com.siddnaidu.exercisetracker.repository.UserRepository;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -48,18 +49,19 @@ class UserServiceTest {
 
     @Test
     void testGetUserById() {
+        Long id = 10L;
         User user = new User("Sidd", "Naidu");
-        user.setId(10L);
-        when(userRepository.findById(10L)).thenReturn(java.util.Optional.of(user));
+        user.setId(id);
+        when(userRepository.findById(id)).thenReturn(java.util.Optional.of(user));
 
-        User savedUser = userServiceTest.getUserById(10L);
+        User savedUser = userServiceTest.getUserById(id);
 
         assertThat(savedUser).isEqualTo(user);
     }
 
     @Test
     void testGetUserByIdNotFound(){
-        Long id = Long.valueOf(10);
+        Long id = 10L;
 
         Optional<User> user = userRepository.findById(id);
         assertThatThrownBy(() -> userServiceTest.getUserById(id))
@@ -83,82 +85,79 @@ class UserServiceTest {
     }
 
     @Test
-    @Disabled
     void testEditUser() {
-//        User oldUser = new User("Sidd", "Naidu", 5,
-//                9, 140, 26);
-        User oldUser = mock(User.class);
-//        User newUser = new User("Sidd", "Naidu", 5,
-//                9, 145, 26);
-        oldUser.setId(0L);
-        User newUser = mock(User.class);
-//        newUser.setId(10L);
-//        newUser.setFirstName("Sidd");
-//        newUser.setLastName("Naidu");
-//        newUser.setAge(26);
-//        newUser.setHeightFeet(5);
-//        newUser.setHeightInches(9);
-//        newUser.setWeight(145);
+        Long id = 10L;
+        User oldUser = new User("Sidd", "Naidu", 5,
+                9, 140, 26);
+        oldUser.setId(id);
+        float oldWeight = oldUser.getWeight();
+        User newUser = new User("Sidd", "Naidu", 5,
+                9, 145, 26);
+        newUser.setId(id);
+        User mockUser = mock(User.class);
 
-        given(userRepository.existsById(anyLong())).willReturn(true);
-        doReturn(oldUser).when(userRepository).findById(anyLong());
+        when(userRepository.findById(id)).thenReturn(Optional.of(oldUser));
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(mockUser.getFirstName()).thenReturn(newUser.getFirstName());
+        when(mockUser.getLastName()).thenReturn(newUser.getLastName());
+        when(mockUser.getHeightFeet()).thenReturn(newUser.getHeightFeet());
+        when(mockUser.getHeightInches()).thenReturn(newUser.getHeightInches());
+        when(mockUser.getWeight()).thenReturn(newUser.getWeight());
+        when(mockUser.getAge()).thenReturn(newUser.getAge());
 
-        // argument capture gets both saves from userRepository
-        userServiceTest.editUser(newUser, anyLong());
-        verify(newUser).getFirstName();
-//        verify(newUser).getLastName();
-//        verify(newUser).getWeight();
-//        verify(newUser).getAge();
-//        verify(newUser).getHeightInches();
-//        verify(newUser).getHeightFeet();
-        verify(newUser).getId();
+        userServiceTest.editUser(mockUser, id);
+        verify(mockUser).getFirstName();
+        verify(mockUser).getLastName();
+        verify(mockUser).getWeight();
+        verify(mockUser).getAge();
+        verify(mockUser).getHeightInches();
+        verify(mockUser).getHeightFeet();
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userArgumentCaptor.capture());
 
         User updatedUser = userArgumentCaptor.getValue();
-        System.out.println(updatedUser.getWeight());
 
-        assertThat(updatedUser).isEqualTo(newUser);
+        assertThat(updatedUser.getId()).isEqualTo(newUser.getId());
+        assertThat(updatedUser.getId()).isEqualTo(oldUser.getId());
+        assertThat(updatedUser.getWeight()).isNotEqualTo(oldWeight);
     }
 
     @Test
     void testEditUserCreateNewUser() {
+        Long id = 10L;
         User newUser = new User("Sidd", "Naidu", 5,
                 9, 140, 26);
-        newUser.setId(10L);
+        newUser.setId(id);
 
 //        when(userRepository.getById(10L)).thenReturn(null);
 
-        userServiceTest.editUser(newUser, 10L);
+        userServiceTest.editUser(newUser, id);
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userArgumentCaptor.capture());
 
         User updatedUser = userArgumentCaptor.getValue();
-
         assertThat(updatedUser).isEqualTo(newUser);
     }
 
     @Test
     void testDeleteUser() {
-        Long id = Long.valueOf(10);
+        Long id = 10L;
 
         given(userRepository.existsById(id)).willReturn(true);
 
         userServiceTest.deleteUser(id);
-
         verify(userRepository).deleteById(id);
     }
 
     @Test
     void testDeleteUserNotFound() {
-        Long id = Long.valueOf(10);
+        Long id = 10L;
 
         given(userRepository.existsById(id)).willReturn(false);
 
         assertThatThrownBy(() -> userServiceTest.deleteUser(id))
                 .isInstanceOf(UserNotFoundException.class)
                 .hasMessageContaining("User with id " + id + " does not exist");
-
         verify(userRepository, never()).deleteById(any());
     }
 }
