@@ -30,13 +30,10 @@ public class UserController {
 
     @GetMapping(path = "/api/users/{id}")
     public EntityModel<User> getUser(@PathVariable Long id) {
-
         User user = userService.getUserById(id);
 
         EntityModel<User> resource = EntityModel.of(user);
-
         WebMvcLinkBuilder apiLinks = linkTo(methodOn(this.getClass()).getAllUsers());
-
         resource.add(apiLinks.withRel("all-users"));
 
         return resource;
@@ -45,7 +42,6 @@ public class UserController {
     @PostMapping(path = "/api/users")
     public ResponseEntity<Object> createUser(@Valid @RequestBody User user){
         User savedUser = userService.createUser(user);
-
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedUser.getId()).toUri();
 
